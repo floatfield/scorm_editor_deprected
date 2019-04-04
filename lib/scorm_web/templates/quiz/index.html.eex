@@ -1,0 +1,35 @@
+<%= form_for @conn, Routes.quiz_path(@conn, :new), [as: :words, multipart: true, class: "ui form"], fn f -> %>
+    <div class="field">
+        <label>Описание</label>
+        <%= textarea f, :description %>
+    </div>
+    <div class="two fields">
+        <div class="field">
+            <label>Количество правильных ответов в вопросе</label>
+            <%= number_input f, :right_number %>
+        </div>
+        <div class="field">
+            <label>Количество неправильных ответов в вопросе</label>
+            <%= number_input f, :wrong_number %>
+        </div>
+    </div>
+    <div class="field">
+        <label>Количество верных попыток, необходимых для выполнения</label>
+        <%= number_input f, :min_successful_series %>
+    </div>
+    <div class="field">
+        <%= label f, :right, [class: "ui labeled basic green icon button"] do %>
+            <i class="check icon"></i>
+            Список правильных ответов
+        <% end %>
+        <%= file_input f, :right, [style: "display:none"]%>
+    </div>
+    <div class="field">
+        <%= label f, :wrong, [class: "ui labeled basic red icon button"] do %>
+            <i class="x icon"></i>
+            Список неправильных ответов
+        <% end %>
+        <%= file_input f, :wrong, [style: "display:none"]%>
+    </div>
+    <%= submit "Submit", [class: "ui primary button"] %>
+<% end %>

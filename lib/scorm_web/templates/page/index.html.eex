@@ -1,0 +1,2 @@
+<h2 class="ui header">SCORM модули</h2>
+<%= link "quiz", to: "/quiz"%>
