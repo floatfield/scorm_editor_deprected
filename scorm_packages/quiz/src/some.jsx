@@ -27,6 +27,9 @@ const actions = {
             passed = true;
             if (state.api) {
                 const result = `Количество попыток: ${tries}`;
+                state.api.LMSSetValue("cmi.core.score.raw", "100");
+                state.api.LMSSetValue("cmi.core.score.max", "100");
+                state.api.LMSSetValue("cmi.core.score.mix", "0");
                 state.api.LMSSetValue("cmi.comments", result);
                 state.api.LMSCommit("");
                 state.api.LMSFinish("");

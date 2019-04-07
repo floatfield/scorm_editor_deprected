@@ -1,6 +1,4 @@
 defmodule ScormWeb.QuizController do
-    require Logger
-    @root_dir File.cwd!
     @quiz_dir "#{File.cwd!}/scorm_packages/quiz"
     @file_asset_dir "#{File.cwd!}/priv/static/files"
 
