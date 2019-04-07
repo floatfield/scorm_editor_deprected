@@ -10,17 +10,17 @@
     <schema>ADL SCORM</schema>
     <schemaversion>1.2</schemaversion>
   </metadata>
-  <organizations default="shulte_table_default">
-    <organization identifier="shulte_table_default">
-      <title>Shulte tables</title>
-      <item identifier="shulte_table" identifierref="shulte">
-        <title>Table</title>
+  <organizations default="quiz_default">
+    <organization identifier="quiz_default">
+      <title>Тест</title>
+      <item identifier="some_quiz" identifierref="quiz">
+        <title>Тест</title>
       </item>
     </organization>
   </organizations>
 
   <resources>
-    <resource identifier="shulte" type="webcontent" adlcp:scormtype="sco" href="index.html">
+    <resource identifier="quiz" type="webcontent" adlcp:scormtype="sco" href="index.html">
       <file href="index.html"/>
       <file href="styles.css"/>
       <file href="main.js"/>

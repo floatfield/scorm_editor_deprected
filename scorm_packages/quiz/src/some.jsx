@@ -5,6 +5,9 @@ import config from "./config";
 
 const { minSuccessSeries, right, wrong, rightNumber, wrongNumber, description } = config;
 
+const rn = Math.min(rightNumber, right.length);
+const wn = Math.min(wrongNumber, wrong.length);
+
 const initialState = {
     successfulTries: 0,
     tries: 0,
@@ -15,7 +18,7 @@ const actions = {
     CHECK_WORDS: (state, action) => {
         const { payload: words } = action;
         let { successfulTries, tries, passed } = state;
-        const wordsAreRight = words.length === rightNumber && words.every(w =>right.includes(w));
+        const wordsAreRight = words.length === rn && words.every(w =>right.includes(w));
         successfulTries = wordsAreRight
             ? successfulTries + 1
             : 0;
@@ -49,7 +52,7 @@ export const App = ({ scormAPI }) => {
         }
     );
     const [state] = store;
-    const words = pickRandomItems(right, wrong, rightNumber, wrongNumber);
+    const words = pickRandomItems(right, wrong, rn, wn);
     const mainApp = state.passed
         ? <Label color= "green" content="Выполнено!" icon="check" />
         : <Quiz store={store} words={words} />;

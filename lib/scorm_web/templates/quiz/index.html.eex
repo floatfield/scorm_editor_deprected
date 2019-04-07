@@ -1,5 +1,9 @@
 <%= form_for @conn, Routes.quiz_path(@conn, :new), [as: :words, multipart: true, class: "ui form"], fn f -> %>
     <div class="field">
+        <label>Название модуля</label>
+        <%= text_input f, :file_name %>
+    </div>
+    <div class="field">
         <label>Описание</label>
         <%= textarea f, :description %>
     </div>
