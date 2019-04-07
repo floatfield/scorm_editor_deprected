@@ -22,18 +22,11 @@
         <%= number_input f, :min_successful_series %>
     </div>
     <div class="field">
-        <%= label f, :right, [class: "ui labeled basic green icon button"] do %>
-            <i class="check icon"></i>
-            Список правильных ответов
+        <%= label f, :answers, [class: "ui labeled basic blue icon button"] do %>
+            <i class="tasks icon"></i>
+            Список ответов
         <% end %>
-        <%= file_input f, :right, [style: "display:none"]%>
-    </div>
-    <div class="field">
-        <%= label f, :wrong, [class: "ui labeled basic red icon button"] do %>
-            <i class="x icon"></i>
-            Список неправильных ответов
-        <% end %>
-        <%= file_input f, :wrong, [style: "display:none"]%>
+        <%= file_input f, :answers, [style: "display:none"]%>
     </div>
     <%= submit "Submit", [class: "ui primary button"] %>
 <% end %>

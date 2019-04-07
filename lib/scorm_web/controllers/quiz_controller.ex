@@ -18,8 +18,8 @@ defmodule ScormWeb.QuizController do
             "min_successful_series" => min_success,
             "file_name" => file_name
         } = words
-        right_words = get_file_content(words, "right")
-        wrong_words = get_file_content(words, "wrong")
+        answers = get_file_content(words, "answers")
+        {right, wrong} = parse_answers(answers)
         {right_number, _} = Integer.parse(right_n)
         {wrong_number, _} = Integer.parse(wrong_n)
         {min_successful_series, _} = Integer.parse(min_success)
@@ -28,8 +28,8 @@ defmodule ScormWeb.QuizController do
             "minSuccessSeries" => min_successful_series,
             "rightNumber" => right_number,
             "wrongNumber" => wrong_number,
-            "right" => to_words(right_words),
-            "wrong" => to_words(wrong_words)
+            "right" => right,
+            "wrong" => wrong
         }
         encoded_string = "export default #{Poison.encode!(json)}"
         create_quiz_scrom(encoded_string, file_name)
@@ -42,11 +42,17 @@ defmodule ScormWeb.QuizController do
         IO.read(file, :all)
     end
 
+    defp parse_answers(answers_str) do
+        [right, wrong] = String.split(answers_str, "-----")
+        {to_words(right), to_words(wrong)}
+    end
+
     defp to_words(str) do
         str
-        |> String.split(",")
+        |> String.split("\n")
         |> Enum.map(&String.trim/1)
         |> Enum.uniq
+        |> Enum.filter(fn s -> String.length(s) > 0 end)
     end
 
     defp create_quiz_scrom(string_to_write, file_name) do
