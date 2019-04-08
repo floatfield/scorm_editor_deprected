@@ -11,31 +11,34 @@ const wn = Math.min(wrongNumber, wrong.length);
 const initialState = {
     successfulTries: 0,
     tries: 0,
+    answers: [],
     passed: false
 };
 
 const actions = {
     CHECK_WORDS: (state, action) => {
         const { payload: words } = action;
-        let { successfulTries, tries, passed } = state;
+        let { successfulTries, tries, passed, answers: prevAnswers } = state;
         const wordsAreRight = words.length === rn && words.every(w =>right.includes(w));
+        const answers = prevAnswers.concat(words);
         successfulTries = wordsAreRight
             ? successfulTries + 1
             : 0;
         tries += 1;
+        
         if (successfulTries === minSuccessSeries) {
             passed = true;
             if (state.api) {
-                const result = `Количество попыток: ${tries}`;
+                const result = `Количество попыток: ${tries}; ${answers.join("--")}`;
                 state.api.LMSSetValue("cmi.core.score.raw", "100");
                 state.api.LMSSetValue("cmi.core.score.max", "100");
-                state.api.LMSSetValue("cmi.core.score.mix", "0");
+                state.api.LMSSetValue("cmi.core.score.min", "0");
                 state.api.LMSSetValue("cmi.comments", result);
                 state.api.LMSCommit("");
                 state.api.LMSFinish("");
             }
         }
-        return { successfulTries, passed, tries };
+        return { ...state, successfulTries, passed, tries, answers };
     }
 };
 
