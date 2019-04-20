@@ -1,5 +1,5 @@
 import React, { useState, useReducer } from "react";
-import { Form, Button, Segment, Checkbox, Label, Message } from "semantic-ui-react";
+import { Form, Button, Segment, Checkbox, Label, Message, Icon, Grid } from "semantic-ui-react";
 import { curry, pipe, take, isEmpty, nth, remove, without } from "ramda";
 import config from "./config";
 
@@ -9,8 +9,8 @@ const rn = Math.min(rightNumber, right.length);
 const wn = Math.min(wrongNumber, wrong.length);
 
 const initialState = {
-    successfulTries: 0,
-    tries: 0,
+    tries: [],
+    currentTry: [],
     answers: [],
     passed: false
 };
@@ -18,18 +18,18 @@ const initialState = {
 const actions = {
     CHECK_WORDS: (state, action) => {
         const { payload: words } = action;
-        let { successfulTries, tries, passed, answers: prevAnswers } = state;
+        let { tries, currentTry, passed, answers: prevAnswers } = state;
         const wordsAreRight = words.length === rn && words.every(w =>right.includes(w));
         const answers = prevAnswers.concat(words);
-        successfulTries = wordsAreRight
-            ? successfulTries + 1
-            : 0;
-        tries += 1;
+        currentTry = wordsAreRight
+            ? [...currentTry, true]
+            : [...currentTry, false];
         
-        if (successfulTries === minSuccessSeries) {
+        if (testPassed(currentTry,minSuccessSeries)) {
             passed = true;
             if (state.api) {
-                const result = `Количество попыток: ${tries}; ${answers.join("--")}`;
+                const triesNumber = tries.length + 1;
+                const result = `Количество попыток: ${triesNumber}; ${answers.join("--")}`;
                 state.api.LMSSetValue("cmi.core.score.raw", "100");
                 state.api.LMSSetValue("cmi.core.score.max", "100");
                 state.api.LMSSetValue("cmi.core.score.min", "0");
@@ -37,10 +37,16 @@ const actions = {
                 state.api.LMSCommit("");
                 state.api.LMSFinish("");
             }
+        } else if(!wordsAreRight) {
+            tries.push(currentTry);
+            currentTry = [];
         }
-        return { ...state, successfulTries, passed, tries, answers };
+        return { ...state, passed, tries, answers, currentTry };
     }
 };
+
+const testPassed = (currentTry, minSuccessSeries) =>
+    currentTry.length === minSuccessSeries && currentTry.every(success => success);
 
 const reducer = (state, action) => {
     const act = actions[action.type];
@@ -60,13 +66,13 @@ export const App = ({ scormAPI }) => {
     const [state] = store;
     const words = pickRandomItems(right, wrong, rn, wn);
     const mainApp = state.passed
-        ? <Label color= "green" content="Выполнено!" icon="check" />
+        ? <Result state={state} />
         : <Quiz store={store} words={words} />;
     return <Segment color="teal">{mainApp}</Segment>;
 };
 
 const Quiz = ({ store, words }) => {
-    const [_, dispatch] = store;
+    const [state, dispatch] = store;
     const [checkedWords, setCheckedWords] = useState([]);
     const toggleWord = word => {
         const newWords = checkedWords.includes(word)
@@ -85,6 +91,7 @@ const Quiz = ({ store, words }) => {
             />
         )
     );
+    const triesLog = createTryLog(state);
     return (
         <div>
             <Message
@@ -104,6 +111,7 @@ const Quiz = ({ store, words }) => {
                     }}
                 />
             </Form>
+            <div>{triesLog}</div>
         </div>
     );
 };
@@ -132,4 +140,43 @@ const random = (min, max) => {
     min = Math.ceil(min);
     max = Math.floor(max);
     return Math.floor(Math.random() * (max - min)) + min;
+};
+
+const createTryLog = ({ tries, currentTry }) => {
+    const rows = [...tries, currentTry].map((t, i) => {
+        const buttons = t.map((success, i) => {
+            const key = `try_${i}`;
+            const name = success ? "check" : "close";
+            const color = success ? "green" : "red";
+            return (
+                <Button icon key={key} color={color}>
+                    <Icon name={name}></Icon>
+                </Button>
+            );
+        });
+        return (
+            <Grid.Row>
+                <Grid.Column width={3}>Попытка {i + 1}</Grid.Column>
+                <Grid.Column>
+                    <Button.Group>
+                        {buttons}
+                    </Button.Group>
+                </Grid.Column>
+            </Grid.Row>
+        );
+    });
+    return (
+        <Grid columns={2} padded>
+            {rows}
+        </Grid>
+    );
+};
+
+const Result = ({ state }) => {
+    return (
+        <div>
+            <Label color="green" content="Выполнено!" icon="check" />
+            {createTryLog(state)}
+        </div>
+    );
 };
