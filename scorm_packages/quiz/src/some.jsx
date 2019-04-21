@@ -3,7 +3,7 @@ import { Form, Button, Segment, Checkbox, Label, Message, Icon, Grid } from "sem
 import { curry, pipe, take, isEmpty, nth, remove, without } from "ramda";
 import config from "./config";
 
-const { minSuccessSeries, right, wrong, rightNumber, wrongNumber, description } = config;
+const { minSuccessSeries, right, wrong, rightNumber, wrongNumber, description, marks } = config;
 
 const rn = Math.min(rightNumber, right.length);
 const wn = Math.min(wrongNumber, wrong.length);
@@ -29,9 +29,10 @@ const actions = {
             passed = true;
             if (state.api) {
                 const triesNumber = tries.length + 1;
+                const markEntry = marks.find(x => x.triesNumber === triesNumber) || { mark: "2" }
                 const result = `Количество попыток: ${triesNumber}; ${answers.join("--")}`;
-                state.api.LMSSetValue("cmi.core.score.raw", "100");
-                state.api.LMSSetValue("cmi.core.score.max", "100");
+                state.api.LMSSetValue("cmi.core.score.raw", markEntry.mark);
+                state.api.LMSSetValue("cmi.core.score.max", "5");
                 state.api.LMSSetValue("cmi.core.score.min", "0");
                 state.api.LMSSetValue("cmi.comments", result);
                 state.api.LMSCommit("");

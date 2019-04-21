@@ -18,6 +18,7 @@ defmodule ScormWeb.QuizController do
         } = words
         answers = get_file_content(words, "answers")
         {right, wrong} = parse_answers(answers)
+        marks = pick_marks(words)
         {right_number, _} = Integer.parse(right_n)
         {wrong_number, _} = Integer.parse(wrong_n)
         {min_successful_series, _} = Integer.parse(min_success)
@@ -27,7 +28,8 @@ defmodule ScormWeb.QuizController do
             "rightNumber" => right_number,
             "wrongNumber" => wrong_number,
             "right" => right,
-            "wrong" => wrong
+            "wrong" => wrong,
+            "marks" => marks
         }
         encoded_string = "export default #{Poison.encode!(json)}"
         create_quiz_scrom(encoded_string, file_name)
@@ -61,5 +63,27 @@ defmodule ScormWeb.QuizController do
             :ok = File.cp "#{@quiz_dir}/dist/quiz.zip", "#{@file_asset_dir}/#{file_name}.zip"
             :ok = File.rm "#{@quiz_dir}/dist/quiz.zip"
         end
+    end
+
+    defp pick_marks(words) do
+        words
+        |> Enum.filter(&is_mark/1)
+        |> Enum.map(&to_mark/1)
+    end
+
+    defp is_mark({ key, val }) do
+        String.starts_with?(key, "mark") and String.length(val) > 0
+    end
+
+    defp to_mark({ key, val }) do
+        tries_number = key
+        |> String.split("_")
+        |> Enum.at(1)
+        |> Integer.parse(10)
+        |> elem(0)
+        %{
+            "triesNumber" => tries_number,
+            "mark" => val
+        }
     end
 end

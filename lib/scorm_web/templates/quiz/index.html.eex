@@ -28,5 +28,11 @@
         <% end %>
         <%= file_input f, :answers, [style: "display:none"]%>
     </div>
-    <%= submit "Submit", [class: "ui primary button"] %>
+    <%= for index <- Enum.to_list(1..10) do %>
+        <div class="field">
+            <label>Оценка за количество попыток: <%= index%></label>
+            <%= number_input f, String.to_atom("mark_#{index}") %>
+        </div>
+    <% end %>
+    <%= submit "Создать", [class: "ui primary button"] %>
 <% end %>
