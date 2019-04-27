@@ -1,7 +1,11 @@
 // We need to import the CSS so that webpack will load it.
 // The MiniCssExtractPlugin is used to separate it out into
 // its own CSS file.
-import css from "../css/app.css"
+import css from "../css/app.css";
+import React from "react";
+import ReactDOM from "react-dom";
+import { FlyApp } from "./fly/fly";
+import { LettersApp } from "./letters/letters";
 
 // webpack automatically bundles all modules in your
 // entry points. Those entry points can be configured
@@ -15,3 +19,13 @@ import "phoenix_html"
 //
 // Local files can be imported directly using relative paths, for example:
 // import socket from "./socket"
+
+const flyWrapper = document.querySelector("#fly-wrapper");
+if (flyWrapper !== null) {
+    ReactDOM.render(<FlyApp />, flyWrapper);
+}
+
+const lettersWrapper = document.querySelector("#letters-wrapper");
+if (lettersWrapper !== null) {
+	ReactDOM.render(<LettersApp />, lettersWrapper);
+}

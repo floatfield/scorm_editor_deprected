@@ -1,0 +1,8 @@
+#some div::selection {
+    color: white;
+    background-color: white;
+}
+
+#some div:focus {
+    outline: none;
+}

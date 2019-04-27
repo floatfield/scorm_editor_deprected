@@ -1,0 +1,71 @@
+.fly.ui.segment {
+    position: relative;
+    width: 600px;
+    height: 600px;
+    padding: 0;
+}
+
+.fly:focus {
+    outline: none;
+}
+
+.fly .bug.icon {
+    position: absolute;
+    top: 300px;
+    left: 300px;
+    transform: translate(-50%,-50%) !important;
+}
+
+.fly .ui.divider {
+    position: absolute;
+    width: 600px;
+    margin-top: 0;
+}
+
+.fly .ui.divider:first-child {
+    top: 200px;
+}
+
+.fly .ui.divider:nth-child(2) {
+    top: 400px;
+}
+
+.fly .ui.vertical.divider:nth-child(3) {
+    left: 200px;
+}
+
+.fly .ui.vertical.divider::before,
+.fly .ui.vertical.divider::after {
+    height: 100%
+}
+
+.fly .ui.vertical.divider:nth-child(4) {
+    left: 400px;
+}
+
+.fly .direction.ui.icon {
+    position: absolute;
+    transform: translate(-50%,-50%);
+    top: 300px;
+    left: 300px;
+    opacity: 0;
+}
+
+.fly .direction.ui.icon.animated {
+    animation-name: grow;
+    animation-duration: 500ms;
+}
+
+@keyframes grow {
+    from {
+        transform: translate(-50%,-50%) scale(1, 1);
+        opacity: 0;
+    }
+    50% {
+        opacity: 1;
+    }
+    to {
+        transform: translate(-50%,-50%) scale(2, 2);
+        opacity: 0;
+    }
+}

@@ -17,6 +17,8 @@ defmodule ScormWeb.Router do
     pipe_through :browser
 
     get "/", PageController, :index
+    get "/fly", PageController, :fly
+    get "/letters", PageController, :letters
     get "/quiz", QuizController, :index
     post "/quiz", QuizController, :new
   end
