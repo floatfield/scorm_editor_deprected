@@ -12,10 +12,10 @@ const directionMap = {
 };
 
 const counterDirections = {
-	up: "down",
-	down: "up",
-	left: "right",
-	right: "left"
+    up: "down",
+    down: "up",
+    left: "right",
+    right: "left"
 };
 
 const initialState = {
@@ -221,7 +221,7 @@ const Participants = ({ store }) => {
         };
         return (
             <Form.Field key={i}>
-                <input placeholder="Имя Фамилия" value={name} onChange={onChange}/>
+                <input placeholder="Имя Фамилия" value={name} onChange={onChange} />
             </Form.Field>
         );
     });
@@ -233,17 +233,17 @@ const Participants = ({ store }) => {
         type: "START_GAME"
     });
     return (
-		<Form error={state.message !== null}>
+        <Form error={state.message !== null}>
             <div className="ui header">Участники</div>
             {message}
             {names}
             <Form.Field>
                 <Button
-                size="tiny"
-                icon="plus"
-                basic
-                onClick={addParticipant}
-            />
+                    size="tiny"
+                    icon="plus"
+                    basic
+                    onClick={addParticipant}
+                />
             </Form.Field>
             <Form.Field>
                 <Button onClick={startGame}>Начать</Button>
@@ -253,7 +253,7 @@ const Participants = ({ store }) => {
 };
 
 const phases = {
-	initialize: Participants,
+    initialize: Participants,
     play: Fly
 };
 

@@ -1,0 +1,47 @@
+{
+  "name": "scorm",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "webpack": "npx webpack --mode production",
+    "start": "npx webpack-dev-server --config ./webpack.config.js --mode development",
+    "build": "npm run webpack && cd dist && zip fly.zip *.html *.js *.css *.xml"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/floatfield/scormTable.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/floatfield/scormTable/issues"
+  },
+  "homepage": "https://github.com/floatfield/scormTable#readme",
+  "devDependencies": {
+    "@babel/core": "^7.3.4",
+    "@babel/preset-env": "^7.3.4",
+    "@babel/preset-react": "^7.0.0",
+    "babel-loader": "^8.0.5",
+    "semantic-ui-css": "^2.4.1",
+    "semantic-ui-react": "^0.85.0",
+    "webpack": "^4.29.6",
+    "webpack-cli": "^3.2.3",
+    "webpack-dev-server": "^3.2.1"
+  },
+  "dependencies": {
+    "classnames": "^2.2.6",
+    "date-fns": "^1.30.1",
+    "ramda": "^0.26.1",
+    "react": "^16.8.4",
+    "react-dom": "^16.8.4",
+    "react-rebound": "^0.8.3"
+  },
+  "babel": {
+    "presets": [
+      "@babel/preset-env",
+      "@babel/preset-react"
+    ]
+  }
+}

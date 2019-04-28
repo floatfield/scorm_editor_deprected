@@ -5,7 +5,7 @@ const hide = state => {
     const hiddenSentencesNumber = state.hiddenSentencesNumber + 1;
     const currentSentence = sentences[hiddenSentencesNumber];
     const timeTillNextHide = calculateWaitTime(currentSentence, speed);
-    const lettersToHide = state.lettersToHide + currentSentence.length + 2;
+    const lettersToHide = countLettersToHide(state, currentSentence);
     return {
         ...state,
         hiddenSentencesNumber,
@@ -13,6 +13,13 @@ const hide = state => {
         lettersToHide
     };
 };
+
+const countLettersToHide = (state, currentSentence) => {
+    const lettersToHide = state.lettersToHide + currentSentence.length + 2;
+    return lettersToHide < state.text.length
+        ? lettersToHide
+        : state.text.length;
+}
 
 const actions = {
     "HIDE_NEXT": hide
@@ -46,7 +53,7 @@ const calculateWaitTime = (sentence, speed) => {
 
 export const App = ({ text }) => {
     const ref = React.useRef(null);
-    const store = React.useReducer(reducer, mkInitialState(text, 300));
+    const store = React.useReducer(reducer, mkInitialState(text, 200));
     React.useEffect(hideNext(ref, store));
     return (
         <div

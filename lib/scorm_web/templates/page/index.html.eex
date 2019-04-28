@@ -1,6 +1,5 @@
 <h2 class="ui header">SCORM модули</h2>
 <div class="ui link list">
-    <%= link "quiz", to: "/quiz", class: "item"%>
     <%= link "Муха", to: "/fly", class: "item"%>
     <%= link "Буквы", to: "/letters", class: "item"%>
 </div>

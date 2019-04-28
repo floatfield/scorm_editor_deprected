@@ -5,7 +5,7 @@ import { scormProcessInitialize } from "./scormFunctions";
 
 const API = scormProcessInitialize();
 
-const text = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam non tempor ex. Nunc a nulla at odio feugiat pharetra eu et nisi. Nam ornare lacinia lacus. Suspendisse ut magna ut ex tristique scelerisque. Donec rutrum libero nec risus aliquet sodales. Maecenas egestas, risus vel tempor consectetur, neque est molestie lacus, ac tempor urna ligula nec magna. Integer at nulla hendrerit, fermentum augue eu, pharetra nisi. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Nullam dictum urna non enim pulvinar, ac euismod nisl laoreet. Donec lorem magna, imperdiet at porttitor facilisis, congue et metus. Sed lectus magna, auctor eleifend leo eget, tempor accumsan lectus. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Nullam eu felis id quam pulvinar commodo. Nulla facilisi.";
+const text = "Более сотни лет аналоговая собака виляла цифровым хвостом. Попытки расширить возможности наших органов чувств – зрения, слуха, и даже, в каком-то смысле, осязания, вели инженеров и учёных на поиски лучших компонентов для телеграфа, телефона, радио и радаров. Лишь по счастливой случайности эти поиски обнаружили путь к созданию новых типов цифровых машин. И я решил рассказать историю этой постоянной экзаптации, во время которой инженеры электросвязи поставляли исходные материалы для первых цифровых компьютеров, а иногда даже сами проектировали и создавали эти компьютеры.";
 
 document.addEventListener("mousedown", e => {
     e.preventDefault();

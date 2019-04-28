@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Grid, Segment, Button } from "semantic-ui-react";
+import { Grid, Segment, Button, Message, GridColumn } from "semantic-ui-react";
 import { range, groupBy, identity, values, pipe, any } from "ramda";
 import * as random from "random";
 
@@ -49,11 +49,20 @@ export const LettersApp = () => {
 
 const LevelSelector = ({ setLevel }) => (
     <Segment color="teal">
-        <Button.Group>
-            <Button positive onClick={() => setLevel("easy")}>Лёгко</Button>
-            <Button.Or text="" />
-            <Button onClick={() => setLevel("hard")}>Сложно</Button>
-        </Button.Group>
+		<Message info>
+			<p>Вам предлагается потренироваться в совершении трех  действий одновременно, в выполнении которых задействованы разные полушария. Ваша задача  - читать вслух буквы первого ряда, следить за буквами второго ряда и поднимать руки согласно инструкции.</p>
+		</Message>
+        <Grid>
+			<Grid.Row textAlign="center">
+				<GridColumn>
+					<Button.Group>
+						<Button positive onClick={() => setLevel("easy")}>Лёгко</Button>
+						<Button.Or text="" />
+						<Button onClick={() => setLevel("hard")}>Сложно</Button>
+					</Button.Group>
+				</GridColumn>
+			</Grid.Row>
+		</Grid>
     </Segment>
 );
 
@@ -62,10 +71,13 @@ const Letters = ({ level }) => {
     const letterColumns = mkLetterColumns(state.letters);
     const commadColumns = mkLetterColumns(state.commandLetters);
     useEffect(() => {
-        setTimeout(() => setState(mkState(6, level)), 5000);
+        setTimeout(() => setState(mkState(6, level)), 10000);
     });
     return (
         <Segment color="teal">
+			<Message info>
+				<p>Сядьте прямо. Руки положите перед собой. Ваша задача - читать буквы первого ряда и одновременно поднимать руки. Если под буквой стоит "Л", поднимайте левую руку. Если под буквой стоит "П", поднимайте правую руку. Если под буквой стоит "В", поднимайте обе руки. Буквы будут постоянно меняться. Постарайтесь прочитать несколько рядов без ошибок.</p>
+			</Message>
             <Grid columns="six" celled="internally" padded>
                 <Grid.Row textAlign="center">{letterColumns}</Grid.Row>
                 <Grid.Row textAlign="center">{commadColumns}</Grid.Row>
