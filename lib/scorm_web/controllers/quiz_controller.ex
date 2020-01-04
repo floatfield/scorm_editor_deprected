@@ -31,7 +31,7 @@ defmodule ScormWeb.QuizController do
             "wrong" => wrong,
             "marks" => marks
         }
-        encoded_string = "export default #{Poison.encode!(json)}"
+        encoded_string = "__quizConfig = #{Poison.encode!(json)}"
         create_quiz_scrom(encoded_string, file_name)
         render(conn, "new.html", file_name: file_name)
     end
@@ -56,7 +56,7 @@ defmodule ScormWeb.QuizController do
     end
 
     defp create_quiz_scrom(string_to_write, file_name) do
-        {:ok, file} = File.open("#{@quiz_dir}/src/config.js", [:utf8, :write])
+        {:ok, file} = File.open("#{@quiz_dir}/dist/config.js", [:utf8, :write])
         IO.write(file, string_to_write)
         File.cd! @quiz_dir, fn () ->
             System.cmd("npm", ["run", "build"])

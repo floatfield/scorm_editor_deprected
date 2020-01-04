@@ -29,22 +29,31 @@ function getAPI() {
     }
     return theAPI;
 }
-
-const SCORM_TRUE = "true";
 const SCORM_FALSE = "false";
+
+const dummyApi = {
+    lmsSetValue: (name, value) => console.error("LSMSetValue: scorm api is not defined...    ", `${name}: ${value}`),
+    lmsCommit: () => console.error("LMSCommit: scorm api is not defined"),
+    lmsFinish: () => console.error("LMSFinish: scorm api is not defined")
+};
 
 export function scormProcessInitialize() {
     const API = getAPI();
     if (!API) {
         console.error("ERROR - Could not establish a connection with the LMS.\n\nYour results may not be recorded.");
-        return;
+        return dummyApi;
     }
     const result = API.LMSInitialize("");
     if (result === SCORM_FALSE) {
         logError(API);
-        return;
+        return dummyApi;
     }
-    return API;
+    return {
+        ...API,
+        lmsSetValue: API.LMSSetValue,
+        lmsCommit: API.LMSCommit,
+        lmsFinish: API.LMSFinish
+    };
 }
 
 export function scormProcessFinish(API) {

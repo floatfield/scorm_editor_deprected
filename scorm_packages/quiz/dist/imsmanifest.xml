@@ -23,7 +23,7 @@
     <resource identifier="quiz" type="webcontent" adlcp:scormtype="sco" href="index.html">
       <file href="index.html"/>
       <file href="styles.css"/>
-      <file href="main.js"/>
+      <file href="config.js"/>
     </resource>
   </resources>
 </manifest>
