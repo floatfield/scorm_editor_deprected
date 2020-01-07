@@ -1,0 +1,87 @@
+.wrapper {
+    display: grid;
+    grid-template-columns: repeat(2, 500px);
+    align-items: start;
+}
+
+.matrix {
+    display: grid;
+    grid-template-columns: repeat(4, 100px);
+    grid-template-rows: repeat(4, 100px);
+    border: 1px solid rgba(34, 36, 38, 0.15);
+    width: 400px;
+    justify-items: center;
+    align-items: center;
+    position: relative;
+}
+
+.matrix.source {
+    grid-template-rows: repeat(2, 100px);
+}
+
+.matrix .cell {
+    width: 100px;
+    height: 100px;
+    padding: 25px;
+}
+
+.matrix .cell div {
+    width: 50px;
+    height: 50px;
+}
+
+.matrix .cell .rect {
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-image: url(./images/rect.svg);
+}
+
+.matrix .cell .rect-cross {
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-image: url(./images/rect-cross.svg);
+}
+
+.matrix .cell .circle {
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-image: url(./images/circle.svg);
+}
+
+.matrix .cell .circle-eq {
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-image: url(./images/circle-eq.svg);
+}
+
+.matrix .cell .cross {
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-image: url(./images/cross.svg);
+}
+
+.matrix .cell .diamond {
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-image: url(./images/diamond.svg);
+}
+
+.matrix .cell .triangle {
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-image: url(./images/triangle.svg);
+}
+
+.matrix .divider {
+    border-top: 1px solid rgba(34, 36, 38, 0.15);
+    position: absolute;
+    width: 400px;
+}
+
+.matrix .vertical.divider {
+    border-top: none;
+    border-left: 1px solid rgba(34, 36, 38, 0.15);
+    position: absolute;
+    width: 0;
+    height: 400px;
+}
