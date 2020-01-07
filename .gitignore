@@ -44,3 +44,5 @@ npm-debug.log
 /scorm_packages/**/node_modules
 /scorm_packages/quiz/src/config.js
 /scorm_packages/quiz/dist/*
+/scorm_packages/**/.merlin
+/scorm_packages/**/_build/*

@@ -7,14 +7,20 @@
         <label>Описание</label>
         <%= textarea f, :description %>
     </div>
+    <div class="field">
+        <div class="field">
+            <label>Общее количество ответов в вопросе</label>
+            <%= number_input f, :question_number %>
+        </div>
+    </div>
     <div class="two fields">
         <div class="field">
-            <label>Количество правильных ответов в вопросе</label>
-            <%= number_input f, :right_number %>
+            <label>Минимальное количество правильных ответов в вопросе</label>
+            <%= number_input f, :min_right_number %>
         </div>
         <div class="field">
-            <label>Количество неправильных ответов в вопросе</label>
-            <%= number_input f, :wrong_number %>
+            <label>Максимальное количество правильных ответов в вопросе</label>
+            <%= number_input f, :max_right_number %>
         </div>
     </div>
     <div class="field">

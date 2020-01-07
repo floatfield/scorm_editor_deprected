@@ -13,14 +13,16 @@ type quizConfig = {
     minSuccessSeries: int,
     right: array(string),
     wrong: array(string),
-    rightNumber: int,
-    wrongNumber: int,
+    questionNumber: int,
+    minRightNumber: int,
+    maxRightNumber: int,
     description: string,
     marks: array(markConfig)
 };
 
 type action =
-  | CheckWords(list(string));
+  | CheckWords(list(string))
+  | SetRightNumber(int);
 
 type quizState =
   | InProgress
@@ -31,5 +33,6 @@ type state = {
     tries: list(list(bool)),
     currentTry: list(bool),
     answers: list(string),
-    quizState: quizState
+    quizState: quizState,
+    rightNumber: option(int)
 };
