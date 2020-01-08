@@ -2,7 +2,7 @@ let to_items = (xs) => ReasonReact.array(Array.of_list(xs));
 
 [@react.component]
 let make = (~state: Config.state) => {
-    let rows = state.tries @ [state.currentTry]
+    let rows = state.tries
         |> List.mapi((i, t) => {
             let buttons = List.mapi((j, success) => {
                 let key = {j|try_$j|j};

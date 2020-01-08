@@ -1,12 +1,12 @@
-type markConfig = {
-    triesNumber: int,
-    mark: string
-};
-
 type scormApi = {
   lmsSetValue: (string, string) => unit,
   lmsCommit: string => unit,
   lmsFinish: string => unit
+};
+
+type markConfig = {
+    triesNumber: int,
+    mark: string
 };
 
 type quizConfig = {

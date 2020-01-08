@@ -28,3 +28,9 @@ let pickNRandom: (int, list('a)) => list('a) = (m, xs) => {
     shuffle(xs)
     |> take(n);
 };
+
+let initial: list('a) => list('a) = xs =>
+    take(max(0, List.length(xs) - 1), xs);
+
+let last: list('a) => 'a = xs =>
+    List.nth(xs, List.length(xs) - 1);

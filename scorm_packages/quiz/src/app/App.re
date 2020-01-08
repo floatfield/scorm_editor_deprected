@@ -10,12 +10,13 @@ let checkWords = (state: state, words: list(string), rightNumber: int) => {
 
     let wordsAreRight = List.length(words) == rightNumber && List.for_all(a => List.mem(a, rightAnswers), words);
     let answers = prevAnswers @ words;
-    let tries = wordsAreRight ? prevTries : prevTries @ [prevTry @ [false]];
-    let currentTry = wordsAreRight ?  prevTry @ [wordsAreRight] : [];
+    let currentTry = prevTry @ [wordsAreRight];
+    let tries = initial(prevTries) @ [currentTry];
     if (testPassed(currentTry, config.minSuccessSeries)) {
         {
             ...state,
             quizState: Passed,
+            tries,
             answers,
             currentTry
         }
@@ -30,13 +31,25 @@ let checkWords = (state: state, words: list(string), rightNumber: int) => {
     }
 };
 
+let checkNewTry = (state: state) => {
+    if (!last(state.currentTry)) {
+        {
+            ...state,
+            currentTry: [],
+            tries: state.tries @ [[]]
+        }
+    } else {
+        state
+    }
+};
+
 let setRightNumber = (state: state, rightNumber: int) => {
     {...state, rightNumber: Some(rightNumber)};
 };
 
 let reducer = (state: state, action: action) =>
     switch (action, state.rightNumber) {
-    | (CheckWords(words), Some(rightNumber)) => checkWords(state, words, rightNumber)
+    | (CheckWords(words), Some(rightNumber)) => checkWords(state, words, rightNumber) |> checkNewTry
     | (SetRightNumber(rightNumber), _) => setRightNumber(state, rightNumber)
     | (_, None) => state
     };
@@ -45,7 +58,7 @@ let reducer = (state: state, action: action) =>
 let make = (~quizConfig: quizConfig, ~scormApi: scormApi) => {
     let (state, dispatch) = React.useReducer(reducer, {
         config: quizConfig,
-        tries: [],
+        tries: [[]],
         currentTry: [],
         answers: [],
         quizState: InProgress,
